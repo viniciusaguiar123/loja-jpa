@@ -4,12 +4,13 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "itens_peido")
+@Table(name = "itens_pedido")
 public class itemPedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "preco_unitario")
     private BigDecimal precoUnitario;
     private int quantidade;
     @ManyToOne
