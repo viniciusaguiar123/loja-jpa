@@ -6,9 +6,10 @@ import br.com.alura.loja.dao.PedidoDAO;
 import br.com.alura.loja.dao.ProdutoDAO;
 import br.com.alura.loja.modelo.*;
 import br.com.alura.loja.util.JPAUtil;
+import br.com.alura.loja.vo.RelatorioDeVendasVo;
+import org.hibernate.event.spi.SaveOrUpdateEvent;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -23,7 +24,6 @@ public class CadastroDePedido {
         Produto produto = produtoDAO.buscarPorId(1L);
         Cliente cliente = clienteDAO.buscarPorId(1L);
 
-
         em.getTransaction().begin();
 
         Pedido pedido = new Pedido(cliente);
@@ -37,18 +37,19 @@ public class CadastroDePedido {
         BigDecimal totalVendido = pedidoDAO.valorTotalVendido();
         System.out.println("VALOR TOTAL: " + totalVendido);
 
-        List<Object[]> relatorio = pedidoDAO.relatorioDeVendas();
-        for(Object[] obj : relatorio){
-            System.out.println(obj[0]);
-            System.out.println(obj[1]);
-            System.out.println(obj[2]);
-        }
+        List<RelatorioDeVendasVo> relatorio = pedidoDAO.relatorioDeVendas();
+        relatorio.forEach(System.out::println);
 
     }
 
     private static void popularBancoDeDados() {
         Categoria celulares = new Categoria("CELULARES");
+        Categoria videogames = new Categoria("VIDEOGAMES");
+        Categoria informatica = new Categoria("INFORMATICA");
+
         Produto celular = new Produto("Xiaomi Redmi", "Muito Legal", new BigDecimal("800"), celulares);
+        Produto videogame = new Produto("PS5", "Playstation 5", new BigDecimal("4000"), videogames);
+        Produto macbook = new Produto("Macbook", "Macbook pro", new BigDecimal("3500"), informatica);
 
         Cliente cliente = new Cliente("Rodrigo", "123456");
 
@@ -60,7 +61,11 @@ public class CadastroDePedido {
 
         em.getTransaction().begin();
         categoriaDAO.cadastrar(celulares);
+        categoriaDAO.cadastrar(videogames);
+        categoriaDAO.cadastrar(informatica);
         produtoDAO.cadastrar(celular);
+        produtoDAO.cadastrar(videogame);
+        produtoDAO.cadastrar(macbook);
         clienteDAO.cadastrar(cliente);
         em.getTransaction().commit();
         em.close();
