@@ -21,35 +21,6 @@ public class CadastroDePedido {
         em.close();
 
         System.out.println(pedido.getCliente().getNome());
-
-        //ProdutoDAO produtoDao = new ProdutoDAO(em);
-        // ClienteDAO clienteDao = new ClienteDAO(em);
-
-        //Produto produto = produtoDao.buscarPorId(1L);
-        //Produto produto2 = produtoDao.buscarPorId(2L);
-        //Produto produto3 = produtoDao.buscarPorId(3L);
-        //Cliente cliente = clienteDao.buscarPorId(1L);
-
-        //em.getTransaction().begin();
-
-        //Pedido pedido = new Pedido(cliente);
-        //pedido.adicionarItem(new ItemPedido(10, pedido, produto));
-        //pedido.adicionarItem(new ItemPedido(40, pedido, produto2));
-        //        Pedido pedido2 = new Pedido(cliente);
-        //        pedido2.adicionarItem(new ItemPedido(2, pedido2, produto3));
-        //
-        //        PedidoDAO pedidoDao = new PedidoDAO(em);
-        //        pedidoDao.cadastrar(pedido);
-        //        pedidoDao.cadastrar(pedido2);
-        //
-        //        em.getTransaction().commit();
-        //
-        //        BigDecimal totalVendido = pedidoDao.valorTotalVendido();
-        //        System.out.println("VALOR TOTAL: " +totalVendido);
-        //
-        //        List<RelatorioDeVendasVo> relatorio = pedidoDao.relatorioDeVendas();
-        //        relatorio.forEach(System.out::println);
-
     }
 
     private static void popularBancoDeDados() {
