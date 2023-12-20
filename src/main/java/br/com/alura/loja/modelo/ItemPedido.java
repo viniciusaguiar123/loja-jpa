@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "itens_pedido")
-public class itemPedido {
+public class ItemPedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,15 +13,15 @@ public class itemPedido {
     @Column(name = "preco_unitario")
     private BigDecimal precoUnitario;
     private int quantidade;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Pedido pedido;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Produto produto;
 
-    public itemPedido() {
+    public ItemPedido() {
     }
 
-    public itemPedido(int quantidade, Pedido pedido, Produto produto) {
+    public ItemPedido(int quantidade, Pedido pedido, Produto produto) {
         this.quantidade = quantidade;
         this.pedido = pedido;
         this.precoUnitario = produto.getPreco();
