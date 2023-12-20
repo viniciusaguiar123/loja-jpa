@@ -1,4 +1,4 @@
-package br.com.alura.loja.modelo.testes;
+package br.com.alura.loja.testes;
 
 import br.com.alura.loja.dao.CategoriaDAO;
 import br.com.alura.loja.dao.ProdutoDAO;

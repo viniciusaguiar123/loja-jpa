@@ -1,8 +1,4 @@
-package br.com.alura.loja.modelo.testes;
-
-import java.math.BigDecimal;
-
-import javax.persistence.EntityManager;
+package br.com.alura.loja.testes;
 
 import br.com.alura.loja.dao.CategoriaDAO;
 import br.com.alura.loja.dao.ClienteDAO;
@@ -11,45 +7,18 @@ import br.com.alura.loja.dao.ProdutoDAO;
 import br.com.alura.loja.modelo.*;
 import br.com.alura.loja.util.JPAUtil;
 
-public class CadastroDePedido {
+import javax.persistence.EntityManager;
+import java.math.BigDecimal;
+
+public class PerformanceConsultas {
 
     public static void main(String[] args) {
         popularBancoDeDados();
         EntityManager em = JPAUtil.getEntityManager();
-        PedidoDAO pedidoDAO = new PedidoDAO(em);
-        Pedido pedido = pedidoDAO.buscarPedidoComCliente(1L);
+        PedidoDAO pedidoDao = new PedidoDAO(em);
+        Pedido pedido = pedidoDao.buscarPedidoComCliente(1L);
         em.close();
-
         System.out.println(pedido.getCliente().getNome());
-
-        //ProdutoDAO produtoDao = new ProdutoDAO(em);
-        // ClienteDAO clienteDao = new ClienteDAO(em);
-
-        //Produto produto = produtoDao.buscarPorId(1L);
-        //Produto produto2 = produtoDao.buscarPorId(2L);
-        //Produto produto3 = produtoDao.buscarPorId(3L);
-        //Cliente cliente = clienteDao.buscarPorId(1L);
-
-        //em.getTransaction().begin();
-
-        //Pedido pedido = new Pedido(cliente);
-        //pedido.adicionarItem(new ItemPedido(10, pedido, produto));
-        //pedido.adicionarItem(new ItemPedido(40, pedido, produto2));
-        //        Pedido pedido2 = new Pedido(cliente);
-        //        pedido2.adicionarItem(new ItemPedido(2, pedido2, produto3));
-        //
-        //        PedidoDAO pedidoDao = new PedidoDAO(em);
-        //        pedidoDao.cadastrar(pedido);
-        //        pedidoDao.cadastrar(pedido2);
-        //
-        //        em.getTransaction().commit();
-        //
-        //        BigDecimal totalVendido = pedidoDao.valorTotalVendido();
-        //        System.out.println("VALOR TOTAL: " +totalVendido);
-        //
-        //        List<RelatorioDeVendasVo> relatorio = pedidoDao.relatorioDeVendas();
-        //        relatorio.forEach(System.out::println);
-
     }
 
     private static void popularBancoDeDados() {
@@ -63,10 +32,18 @@ public class CadastroDePedido {
 
         Cliente cliente = new Cliente("Rodrigo", "123456");
 
+        Pedido pedido = new Pedido(cliente);
+        pedido.adicionarItem(new ItemPedido(10, pedido, celular));
+        pedido.adicionarItem(new ItemPedido(40, pedido, videogame));
+
+        Pedido pedido2 = new Pedido(cliente);
+        pedido2.adicionarItem(new ItemPedido(2, pedido, macbook));
+
         EntityManager em = JPAUtil.getEntityManager();
         ProdutoDAO produtoDao = new ProdutoDAO(em);
         CategoriaDAO categoriaDao = new CategoriaDAO(em);
         ClienteDAO clienteDao = new ClienteDAO(em);
+        PedidoDAO pedidoDao = new PedidoDAO(em);
 
         em.getTransaction().begin();
 
@@ -79,6 +56,9 @@ public class CadastroDePedido {
         produtoDao.cadastrar(macbook);
 
         clienteDao.cadastrar(cliente);
+
+        pedidoDao.cadastrar(pedido);
+        pedidoDao.cadastrar(pedido2);
 
         em.getTransaction().commit();
         em.close();
