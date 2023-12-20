@@ -12,7 +12,7 @@ import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class testeCriteria {
+public class TesteCriteria {
 
     public static void main(String[] args) {
         popularBancoDeDados();
